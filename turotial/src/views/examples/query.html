@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--引入mapbox类库-->
+    <link rel='stylesheet' href='libs/mapbox/mapbox-gl.css'>;
+    <!--引入webgis.js类库-->
+    <link rel="stylesheet" href="webgis.css">;
+</head>
+
+<body>
+    <div id="map" style="width:400px;height:500px;"></div>
+    <script src='libs/mapbox/mapbox-gl-dev.js'></script>
+    <script src="webgis.js"></script>
+    <script type="text/javascript">
+        //获取令牌：兼容4A，表单验证等等
+        var tokenProvider = new WebGis.Authenticate({
+            userName: "bs01",
+            password: "Hello123*"
+        });
+        tokenProvider.on("inited", function() {
+            var token = tokenProvider.token;
+            var map = new WebGis.Map({
+                token: token,
+                container: 'map',
+                center: [113.11, 23.05],
+                level: 12,
+                style: 'newgis.json',
+            });
+            //创建一个查询器
+            var query = new WebGis.Query({
+                token: token
+            });
+            query.queryURLsByName({
+                pSRName: "变电",
+                pSRTypeList: [900, 901, 902],
+            }, function(res) {
+                map.addLayer(new WebGis.FeatureLayer(res));
+            })
+        });
+    </script>
+</body>
+
+</html>
