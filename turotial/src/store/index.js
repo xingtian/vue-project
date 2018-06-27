@@ -17,7 +17,7 @@ export default new Vuex.Store({
             var nav = state.currentNav;
             if (!nav) return [];
             var item = bussinessRouterMap.filter(t => t.name == nav);
-            if (item.length == 0) return nav;
+            if (item.length == 0) return [];
             return item[0].children || [];
         },
         isNavCollapse: state => state.navCollapse

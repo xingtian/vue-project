@@ -1,7 +1,7 @@
 <template>
     <div>
         <span style="font-size:1.5em;">
-            <i class="fa fa-bars togger-nav" @click="toggleNav"></i> WebGIS 开发手册
+            <i class="fa togger-nav" :class="{'fa-bars':hasLeftNav,'fa-map':!hasLeftNav}" @click="toggleNav"></i> WebGIS 开发手册
         </span>
         <div class="top-nav" ref="top-nav">
             <a v-for="nav in navs" @click="go(nav)">
@@ -29,12 +29,18 @@
             });
             return { navs }
         },
+        computed: {
+            hasLeftNav() {
+                return this.$store.getters.subNavs.length > 0;
+            }
+        },
         methods: {
             go(nav) {
                 this.$store.commit("SET_NAV", nav.name);
-                this.$router.push({ path: nav.path });
+                this.$router.push({ name: nav.name });
             },
             toggleNav() {
+                if (!this.hasLeftNav) return;
                 this.$store.commit("SET_NAV_COLLAPSE");
             }
         }
@@ -42,7 +48,7 @@
 </script>
 <style>
     .togger-nav {
-        margin-right: 5px;
+        margin-right: 12px;
         cursor: pointer;
         transition: all .5s;
     }

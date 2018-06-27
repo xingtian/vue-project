@@ -1,5 +1,5 @@
 <template>
-    <el-submenu :index="nav.name">
+    <el-submenu :index="nav.name" popper-class="nav-popper">
         <template slot="title">
             <i v-if='nav.icon' class="nav-icon" :class="nav.icon"></i>
             <span>{{nav.name}}</span>
@@ -9,7 +9,7 @@
                 <sideBarItem :nav="item2"></sideBarItem>
             </template>
             <template v-else>
-                <el-menu-item @click="go(item2)" :index="item2.name" :key="item2.name">
+                <el-menu-item @click="go(item2)" :index="item2.name">
                     <i v-if='item2.icon' class="nav-icon" :class="item2.icon"></i>
                     <span>{{item2.name}}</span>
                 </el-menu-item>
@@ -30,3 +30,9 @@
         methods: { go }
     }
 </script>
+
+<style>
+   .nav-popper{
+       left:56px !important;
+   }
+</style>
